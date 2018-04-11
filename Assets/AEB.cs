@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Vehicles.Car;
 
-public class AEB : MonoBehaviour {
+public class AEB : MonoBehaviour
+{    
+    [SerializeField] float testSpeed = 40f;
 
-    [SerializeField] Radar frontBumperRadar;
+    [Header("For Network Control")]
+    [Range(0,1f)] [SerializeField] float brakingPower = 0f;
 
     CarController carController;
     Rigidbody myRigidBody;
@@ -16,24 +19,37 @@ public class AEB : MonoBehaviour {
         carController = GetComponent<CarController>();
         myRigidBody = GetComponent<Rigidbody>();
 
-        myRigidBody.velocity = 20f * Vector3.forward;
+        myRigidBody.velocity = testSpeed * Vector3.forward;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        bool drivingForward = myRigidBody.velocity.z > 0;
-        if (!drivingForward) { return; }
-
-        float distanceToObstacle = frontBumperRadar.GetDistance();
-        print("Obstacles detected at: " + distanceToObstacle);
-        if (distanceToObstacle > 70f) // todo parameterise
+        if (myRigidBody.velocity.z < 2f)
         {
-            carController.Move(0, 1f, 0, 0);
+            carController.Move(0, 0, -1f, 1f); // apply handbrake
+            return;
         }
-        else if (distanceToObstacle < 40f)
+
+        if (brakingPower < Mathf.Epsilon)
         {
-            carController.Move(0, 0, -1f, 0);
+            MaintainTestSpeed();
+        }
+        else
+        {
+            carController.Move(0, 0, -brakingPower, 0);
+        }
+    }
+
+    private void MaintainTestSpeed()
+    {
+        if (myRigidBody.velocity.z < testSpeed)
+        {
+            carController.Move(0, .2f, 0, 0);
+        }
+        else if (myRigidBody.velocity.z > testSpeed)
+        {
+            carController.Move(0, 0, .2f, 0);
         }
     }
 }
