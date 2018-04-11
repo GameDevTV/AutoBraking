@@ -18,28 +18,17 @@ public class AEB : MonoBehaviour
 
     CarController carController;
     Rigidbody myRigidBody;
-    Neuron neuron = new Neuron();
+    Neuron neuron;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         carController = GetComponent<CarController>();
 
         myRigidBody = GetComponent<Rigidbody>();
         myRigidBody.velocity = startSpeed * Vector3.forward;
 
-        TrainNetwork();
-
-        for (float x = -100; x < 100; x++)
-        {
-            print(x + " => " + Neuron.Transfer(x, Neuron.TransferType.sigmoid));
-        }
-    }
-
-    private void TrainNetwork()
-    {
-        neuron.SetWeight(weight);
-        neuron.SetBias(bias);
+        neuron = new Neuron(Neuron.TransferType.binary, bias, weight);
     }
 
     // Update is called once per frame
@@ -54,7 +43,7 @@ public class AEB : MonoBehaviour
     {
         float neuralInput = frontBumperRadar.GetDistance();
         float neuralOutput = neuron.GetOutput(neuralInput);
-        //print("In: " + neuralInput + " Out: " + neuralOutput);
+        print("In: " + neuralInput + " Out: " + neuralOutput);
         brakingPower = neuralOutput;
     }
 

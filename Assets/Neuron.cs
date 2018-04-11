@@ -4,29 +4,22 @@ public class Neuron
 {
     float bias;
     float weight;
+
     public enum TransferType { binary, sigmoid }
     TransferType transferType;
 
-    public void SetBias(float bias)
+    public Neuron(TransferType transferType, float bias, float weight)
     {
+        this.transferType = transferType; 
         this.bias = bias;
-    }
-
-    public void SetWeight(float weight)
-    {
         this.weight = weight;
-    }
-
-    public void SetTransferType(TransferType transferType)
-    {
-        this.transferType = transferType;
     }
 
     public float GetOutput(float input)
     {
-        float product = 1 * bias;
-        product += input * weight;
-        return Transfer(product, transferType);
+        float sum = input * weight;
+        sum = sum + bias;
+        return Transfer(sum, transferType);
     }
 
     public static float Transfer(float x, TransferType transferType)
