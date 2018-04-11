@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AEB : MonoBehaviour {
 
+    [SerializeField] Radar frontBumperRadar;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -11,6 +13,6 @@ public class AEB : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        print(frontBumperRadar.GetDistance()); 
 	}
 }
