@@ -175,12 +175,17 @@ Prefab:
     - target: {fileID: 114237752195800170, guid: 0e7ee4df08df88c4880f43398f9ad2c2,
         type: 2}
       propertyPath: bias
-      value: 40
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 114237752195800170, guid: 0e7ee4df08df88c4880f43398f9ad2c2,
         type: 2}
       propertyPath: weight
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114237752195800170, guid: 0e7ee4df08df88c4880f43398f9ad2c2,
+        type: 2}
+      propertyPath: transferType
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0e7ee4df08df88c4880f43398f9ad2c2, type: 2}

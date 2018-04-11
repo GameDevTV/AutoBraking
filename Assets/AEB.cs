@@ -10,6 +10,7 @@ public class AEB : MonoBehaviour
     [SerializeField] float startSpeed = 40f;
 
     [Header("Network Training")]
+    [SerializeField] Neuron.TransferType transferType;
     [SerializeField] float weight;
     [SerializeField] float bias;
 
@@ -28,7 +29,11 @@ public class AEB : MonoBehaviour
         myRigidBody = GetComponent<Rigidbody>();
         myRigidBody.velocity = startSpeed * Vector3.forward;
 
-        neuron = new Neuron(Neuron.TransferType.binary, bias, weight);
+        Neuron.NeuronSetup neuronSetup;
+        neuronSetup.transferType = transferType;
+        neuronSetup.bias = bias;
+        neuronSetup.weight = weight;
+        neuron = new Neuron(neuronSetup);
     }
 
     // Update is called once per frame
@@ -43,7 +48,6 @@ public class AEB : MonoBehaviour
     {
         float neuralInput = frontBumperRadar.GetDistance();
         float neuralOutput = neuron.GetOutput(neuralInput);
-        print("In: " + neuralInput + " Out: " + neuralOutput);
         brakingPower = neuralOutput;
     }
 

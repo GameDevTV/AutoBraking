@@ -8,11 +8,19 @@ public class Neuron
     public enum TransferType { binary, sigmoid }
     TransferType transferType;
 
-    public Neuron(TransferType transferType, float bias, float weight)
+    public struct NeuronSetup
     {
-        this.transferType = transferType; 
-        this.bias = bias;
-        this.weight = weight;
+        public TransferType transferType;
+        public float bias;
+        public float weight;
+    }
+
+    // Constructor
+    public Neuron(NeuronSetup setup)
+    {
+        transferType = setup.transferType; 
+        bias = setup.bias;
+        weight = setup.weight;
     }
 
     public float GetOutput(float input)
@@ -24,27 +32,33 @@ public class Neuron
 
     public static float Transfer(float x, TransferType transferType)
     {
-        if (transferType == TransferType.sigmoid)
+        switch (transferType)
         {
-            return (2 / (1 + Mathf.Exp(-2f * x)) - 1f);
+            case (TransferType.sigmoid):
+                {
+                    return (2 / (1 + Mathf.Exp(-2f * x)) - 1f);
+                }
+            case (TransferType.binary):
+                {
+                    return BinaryTransfer(x);
+                }
+            default:
+                {
+                    Debug.LogError("Unknown transfer type");
+                    return 0;
+                }
         }
+    }
 
-        if (transferType == TransferType.binary)
+    private static float BinaryTransfer(float x)
+    {
+        if (x < 0)
         {
-            if (x < 0)
-            {
-                return -1;
-            }
-            else
-            {
-                return 1;
-            }
+            return -1;
         }
-
         else
         {
-            Debug.LogError("Unknown transfer type"); // todo de-yuck
-            return 0;
+            return 1;
         }
     }
 }
