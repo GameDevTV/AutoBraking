@@ -1,55 +1,69 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Vehicles.Car;
 
 public class AEB : MonoBehaviour
-{    
-    [SerializeField] float testSpeed = 40f;
+{
+    [SerializeField] Radar frontBumperRadar;
+    [SerializeField] float startSpeed = 40f;
+
+    [Header("Network Training")]
+    [SerializeField] float weight;
+    [SerializeField] float bias;
 
     [Header("For Network Control")]
     [Range(0,1f)] [SerializeField] float brakingPower = 0f;
 
     CarController carController;
     Rigidbody myRigidBody;
+    Neuron neuron = new Neuron();
 
 	// Use this for initialization
 	void Start ()
     {
         carController = GetComponent<CarController>();
+
         myRigidBody = GetComponent<Rigidbody>();
+        myRigidBody.velocity = startSpeed * Vector3.forward;
 
-        myRigidBody.velocity = testSpeed * Vector3.forward;
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-        if (myRigidBody.velocity.z < 2f)
-        {
-            carController.Move(0, 0, -1f, 1f); // apply handbrake
-            return;
-        }
+        TrainNetwork();
 
-        if (brakingPower < Mathf.Epsilon)
+        for (float x = -100; x < 100; x++)
         {
-            MaintainTestSpeed();
-        }
-        else
-        {
-            carController.Move(0, 0, -brakingPower, 0);
+            print(x + " => " + Neuron.Transfer(x, Neuron.TransferType.sigmoid));
         }
     }
 
-    private void MaintainTestSpeed()
+    private void TrainNetwork()
     {
-        if (myRigidBody.velocity.z < testSpeed)
+        neuron.SetWeight(weight);
+        neuron.SetBias(bias);
+    }
+
+    // Update is called once per frame
+    void Update ()
+    {
+        DisengageBelowSetSpeed(3f);
+        CalculateBrakingPower();
+        carController.Move(0, 0, -brakingPower, 0);
+    }
+
+    private void CalculateBrakingPower()
+    {
+        float neuralInput = frontBumperRadar.GetDistance();
+        float neuralOutput = neuron.GetOutput(neuralInput);
+        //print("In: " + neuralInput + " Out: " + neuralOutput);
+        brakingPower = neuralOutput;
+    }
+
+    private void DisengageBelowSetSpeed(float setSpeed)
+    {
+        if (myRigidBody.velocity.z < setSpeed)
         {
-            carController.Move(0, .2f, 0, 0);
-        }
-        else if (myRigidBody.velocity.z > testSpeed)
-        {
-            carController.Move(0, 0, .2f, 0);
+            carController.Move(0, 0, -1f, 1f); // apply handbrake
+            Destroy(this);
         }
     }
 }
