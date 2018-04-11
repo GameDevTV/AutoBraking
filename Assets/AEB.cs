@@ -10,7 +10,7 @@ public class AEB : MonoBehaviour
     [SerializeField] float startSpeed = 40f;
 
     [Header("Network Training")]
-    [SerializeField] Neuron.TransferType transferType;
+    [SerializeField] Neuron.OutputFunction outputFunction;
     [SerializeField] float weight;
     [SerializeField] float bias;
 
@@ -30,7 +30,7 @@ public class AEB : MonoBehaviour
         myRigidBody.velocity = startSpeed * Vector3.forward;
 
         Neuron.NeuronSetup neuronSetup;
-        neuronSetup.transferType = transferType;
+        neuronSetup.outputFunction = outputFunction;
         neuronSetup.bias = bias;
         neuronSetup.weight = weight;
         neuron = new Neuron(neuronSetup);

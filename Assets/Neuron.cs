@@ -5,12 +5,12 @@ public class Neuron
     float bias;
     float weight;
 
-    public enum TransferType { binary, sigmoid }
-    TransferType transferType;
+    public enum OutputFunction { step, sigmoid }
+    OutputFunction outputFunction;
 
     public struct NeuronSetup
     {
-        public TransferType transferType;
+        public OutputFunction outputFunction;
         public float bias;
         public float weight;
     }
@@ -18,7 +18,7 @@ public class Neuron
     // Constructor
     public Neuron(NeuronSetup setup)
     {
-        transferType = setup.transferType; 
+        outputFunction = setup.outputFunction; 
         bias = setup.bias;
         weight = setup.weight;
     }
@@ -27,30 +27,30 @@ public class Neuron
     {
         float sum = input * weight;
         sum = sum + bias;
-        return Transfer(sum, transferType);
+        return CalculateOutput(sum, outputFunction);
     }
 
-    public static float Transfer(float x, TransferType transferType)
+    public static float CalculateOutput(float input, OutputFunction outputFunction)
     {
-        switch (transferType)
+        switch (outputFunction)
         {
-            case (TransferType.sigmoid):
-                {
-                    return (2 / (1 + Mathf.Exp(-2f * x)) - 1f);
-                }
-            case (TransferType.binary):
-                {
-                    return BinaryTransfer(x);
-                }
-            default:
-                {
-                    Debug.LogError("Unknown transfer type");
-                    return 0;
-                }
+        case (OutputFunction.sigmoid):
+            {
+                return (2 / (1 + Mathf.Exp(-2f * input)) - 1f);
+            }
+        case (OutputFunction.step):
+            {
+                return StepFunction(input);
+            }
+        default:
+            {
+                Debug.LogError("Unknown parameter");
+                return 0;
+            }
         }
     }
 
-    private static float BinaryTransfer(float x)
+    private static float StepFunction(float x)
     {
         if (x < 0)
         {
