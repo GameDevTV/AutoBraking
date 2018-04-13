@@ -7,15 +7,14 @@ using System.Text;
 
 public class SocketControl : MonoBehaviour
 {
-
-    Socket connectionSocket;
+    Socket listeningSocket, connectionSocket; // todo use result as "opaque x"
     byte[] buffer = new byte[10];
     bool isJumpQueued = false;
 
     // Use this for initialization
     void Start()
     {
-        Socket listeningSocket = new System.Net.Sockets.Socket(
+        listeningSocket = new Socket(
             AddressFamily.InterNetwork, // like the InterNet(work)... see what Sam did there?
             SocketType.Stream,
             ProtocolType.Tcp // not UDP to protect against data loss
@@ -25,11 +24,20 @@ public class SocketControl : MonoBehaviour
             5555)
         );
         listeningSocket.Listen(1);
-        print("Waiting for connection...");
-        connectionSocket = listeningSocket.Accept(); // initialise socket todo make a-sync
-        connectionSocket.Send(Encoding.ASCII.GetBytes("I'm alive!\n"));
 
+        print("Waiting for connection...");
+        var callback = new System.AsyncCallback(OnAcceptConnection);
+        listeningSocket.BeginAccept(OnAcceptConnection, null);
         ReceiveBytes();
+    }
+
+    void OnAcceptConnection(System.IAsyncResult result)
+    {
+        print(System.Reflection.MethodBase.GetCurrentMethod().Name + "() called");
+        connectionSocket = listeningSocket.EndAccept(result);
+
+        print(connectionSocket);
+        connectionSocket.Send(Encoding.ASCII.GetBytes("Connected\n"));
     }
 
     private void Update()
@@ -44,6 +52,7 @@ public class SocketControl : MonoBehaviour
 
     void PrintSpeed()
     {
+        if (connectionSocket == null || !connectionSocket.Connected) { return; }
         connectionSocket.Send(Encoding.ASCII.GetBytes(
             "Speed at t = : " +
             Time.time +
@@ -55,6 +64,7 @@ public class SocketControl : MonoBehaviour
 
     private void ReceiveBytes()
     {
+        if (connectionSocket == null) { return; }
         // register async-callback
         connectionSocket.BeginReceive(
             buffer,
