@@ -369,6 +369,7 @@ GameObject:
   - component: {fileID: 11400022}
   - component: {fileID: 11400024}
   - component: {fileID: 114237752195800170}
+  - component: {fileID: 114696317018840378}
   - component: {fileID: 114351861249658746}
   m_Layer: 0
   m_Name: Car
@@ -870,7 +871,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100042}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -20}
+  m_LocalPosition: {x: 0, y: 0.08, z: -59.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400038}
@@ -2203,7 +2204,7 @@ MonoBehaviour:
   lowPitchMax: 5
   highPitchMultiplier: 0.25
   maxRolloffDistance: 500
-  dopplerLevel: 1
+  dopplerLevel: 0.2
   useDoppler: 1
 --- !u!146 &14600000
 WheelCollider:
@@ -2381,7 +2382,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 0
+  randomSeed: 1014852613
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6037,7 +6038,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frontBumperRadar: {fileID: 114440217081552662}
-  startSpeed: 30
+  startSpeed: 50
+  outputFunction: 1
+  weight: -1
+  weight2: 2
+  bias: 0
   brakingPower: 0
 --- !u!114 &114351861249658746
 MonoBehaviour:
@@ -6075,6 +6080,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionForce: 10000
+--- !u!114 &114696317018840378
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 168ae4415c0a64ca1b898b94db1aa065, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198048214999194522
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -29455,7 +29471,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 0
+  randomSeed: -416539586
   InitialModule:
     serializedVersion: 3
     enabled: 1

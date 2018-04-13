@@ -11,8 +11,9 @@ public class AEB : MonoBehaviour
 
     [Header("Network Training")]
     [SerializeField] Neuron.OutputFunction outputFunction;
-    [SerializeField] float weight;
-    [SerializeField] float bias;
+    [Tooltip("Related to fixed braking distance")][SerializeField] float weight;
+    [Tooltip("Related to speed adjustment factor")][SerializeField] float weight2;
+    [Tooltip("Offset which scales weights")][SerializeField] float bias;
 
     [Header("For Network Control")]
     [Range(0,1f)] [SerializeField] float brakingPower = 0f;
@@ -20,6 +21,7 @@ public class AEB : MonoBehaviour
     CarController carController;
     Rigidbody myRigidBody;
     Neuron neuron;
+    bool brakingStated = false;
 
     // Use this for initialization
     void Start()
@@ -29,10 +31,16 @@ public class AEB : MonoBehaviour
         myRigidBody = GetComponent<Rigidbody>();
         myRigidBody.velocity = startSpeed * Vector3.forward;
 
+        SetupSingleNeuron();
+    }
+
+    private void SetupSingleNeuron()
+    {
         Neuron.NeuronSetup neuronSetup;
         neuronSetup.outputFunction = outputFunction;
         neuronSetup.bias = bias;
         neuronSetup.weight = weight;
+        neuronSetup.weight2 = weight2;
         neuron = new Neuron(neuronSetup);
     }
 
@@ -46,9 +54,13 @@ public class AEB : MonoBehaviour
 
     private void CalculateBrakingPower()
     {
-        float neuralInput = frontBumperRadar.GetDistance();
-        float neuralOutput = neuron.GetOutput(neuralInput);
+        float input1 = frontBumperRadar.GetDistance();
+        float neuralOutput = neuron.GetOutput(input1, myRigidBody.velocity.z);
         brakingPower = neuralOutput;
+        if (brakingPower > 0 && !brakingStated)
+        {
+            brakingStated = true;
+        }
     }
 
     private void DisengageBelowSetSpeed(float setSpeed)

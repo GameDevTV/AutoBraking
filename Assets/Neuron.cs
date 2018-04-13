@@ -3,7 +3,8 @@
 public class Neuron
 {
     float bias;
-    float weight;
+    float weight1;
+    float weight2;
 
     public enum OutputFunction { step, sigmoid }
     OutputFunction outputFunction;
@@ -13,6 +14,7 @@ public class Neuron
         public OutputFunction outputFunction;
         public float bias;
         public float weight;
+        public float weight2;
     }
 
     // Constructor
@@ -20,13 +22,15 @@ public class Neuron
     {
         outputFunction = setup.outputFunction; 
         bias = setup.bias;
-        weight = setup.weight;
+        weight1 = setup.weight;
+        weight2 = setup.weight2;
     }
 
-    public float GetOutput(float input)
+    public float GetOutput(float input, float input2)
     {
-        float sum = input * weight;
-        sum = sum + bias;
+        float sum = input * weight1;
+        sum += input2 * weight2;
+        sum += bias;
         return CalculateOutput(sum, outputFunction);
     }
 
