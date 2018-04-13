@@ -19,17 +19,23 @@ class SocketConnector:
         data = self.s.recv(1024)
         print (repr(data))
 
-def main():
-    # parser = argparse.ArgumentParser(description='Interacts with the running simulator')
-    # parser.add_argument('command', type=str, nargs="*", help='The command to send immediately connected')
-    # args = parser.parse_args()
+    def jump(self):
+        command = "jump" #param
+        b = bytearray()
+        b.extend(map(ord, command))
+        self.s.sendall(b)
 
-    print("boo")
+def main():
+    parser = argparse.ArgumentParser(description='Interacts with the running simulator')
+    parser.add_argument('command', type=str, nargs="*", help='The command to send immediately connected')
+    args = parser.parse_args()
+
     sc = SocketConnector()
     sc.connect()
 
     while True:
-        sc.print_status()
+        # sc.print_status()
+        sc.jump()
 
     s.close()
 
