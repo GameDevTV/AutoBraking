@@ -1,71 +1,46 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Net;
 using System.Net.Sockets;
-using UnityEngine.Serialization;
 using System.Text;
 
 public class SocketControl : MonoBehaviour
 {
-    Socket listeningSocket, connectionSocket; // todo use result as "opaque x"
-    byte[] buffer = new byte[10];
-    bool isJumpQueued = false;
-
-    // Use this for initialization
-    void Start()
-    {
-        listeningSocket = new Socket(
+    Socket listeningSocket = new Socket(
             AddressFamily.InterNetwork, // like the InterNet(work)... see what Sam did there?
             SocketType.Stream,
             ProtocolType.Tcp // not UDP to protect against data loss
         );
-        listeningSocket.Bind(new System.Net.IPEndPoint(
-            System.Net.IPAddress.Parse("127.0.0.1"),
-            5555)
-        );
-        listeningSocket.Listen(1);
+    Socket connectionSocket; // todo use result as "opaque x" per Sam?
+    byte[] buffer = new byte[10];
+    bool isJumpQueued = false;
 
-        print("Waiting for connection...");
-        var callback = new System.AsyncCallback(OnAcceptConnection);
-        listeningSocket.BeginAccept(OnAcceptConnection, null);
-        ReceiveBytes();
+    const int PORT = 5555;
+
+    void Start()
+    {
+        RegisterConnectionAcceptCallback();
+    }
+
+    private void RegisterConnectionAcceptCallback()
+    {
+        listeningSocket.Bind(new IPEndPoint(IPAddress.Loopback,PORT));
+        listeningSocket.Listen(1);
+        Debug.Log("Waiting for localHost connection on port " + PORT + "...");
+        listeningSocket.BeginAccept(new System.AsyncCallback(OnAcceptConnection), null);
     }
 
     void OnAcceptConnection(System.IAsyncResult result)
     {
-        print(System.Reflection.MethodBase.GetCurrentMethod().Name + "() called");
+        Debug.Log("Socket connected");
         connectionSocket = listeningSocket.EndAccept(result);
-
-        print(connectionSocket);
-        connectionSocket.Send(Encoding.ASCII.GetBytes("Connected\n"));
+        connectionSocket.Send(Encoding.ASCII.GetBytes("Connected to simulator\n"));
+        BeginReceive();
     }
 
-    private void Update()
+    private void BeginReceive()
     {
-        PrintSpeed();
-        if (isJumpQueued)
-        {
-            gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 10f, 0);
-            isJumpQueued = false;
-        }
-    }
-
-    void PrintSpeed()
-    {
-        if (connectionSocket == null || !connectionSocket.Connected) { return; }
-        connectionSocket.Send(Encoding.ASCII.GetBytes(
-            "Speed at t = : " +
-            Time.time +
-            " = " +
-            GetComponent<Rigidbody>().velocity.z +
-            '\n'
-        ));
-    }
-
-    private void ReceiveBytes()
-    {
-        if (connectionSocket == null) { return; }
-        // register async-callback
         connectionSocket.BeginReceive(
             buffer,
             0,
@@ -86,6 +61,28 @@ public class SocketControl : MonoBehaviour
             isJumpQueued = true;
         }
 
-        ReceiveBytes();
+        BeginReceive();
+    }
+
+    private void Update()
+    {
+        PrintSpeed();
+        if (isJumpQueued)
+        {
+            gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 10f, 0);
+            isJumpQueued = false;
+        }
+    }
+
+    void PrintSpeed()
+    {
+        if (connectionSocket == null || !connectionSocket.Connected) { return; } // todo
+        connectionSocket.Send(Encoding.ASCII.GetBytes(
+            "Speed at t = : " +
+            Time.time +
+            " = " +
+            GetComponent<Rigidbody>().velocity.z +
+            '\n'
+        ));
     }
 }
