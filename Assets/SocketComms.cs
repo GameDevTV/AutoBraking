@@ -37,8 +37,7 @@ public class SocketComms : MonoBehaviour {
             "Speed at t = : " +
             Time.time +
             " = " +
-            GetComponent<Rigidbody>().velocity.z +
-            '\n'
+            GetComponent<Rigidbody>().velocity.z
         );
     }
 }
