@@ -369,7 +369,6 @@ GameObject:
   - component: {fileID: 11400022}
   - component: {fileID: 11400024}
   - component: {fileID: 114237752195800170}
-  - component: {fileID: 114696317018840378}
   - component: {fileID: 114351861249658746}
   m_Layer: 0
   m_Name: Car
@@ -6080,17 +6079,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionForce: 10000
---- !u!114 &114696317018840378
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 168ae4415c0a64ca1b898b94db1aa065, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!198 &198048214999194522
 ParticleSystem:
   m_ObjectHideFlags: 1

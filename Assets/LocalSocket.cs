@@ -5,8 +5,10 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-public class SocketControl : MonoBehaviour
+public class LocalSocket
 {
+    public bool isReadyToReceive = false;
+
     Socket listeningSocket = new Socket(
             AddressFamily.InterNetwork, // like the InterNet(work)... see what Sam did there?
             SocketType.Stream,
@@ -14,11 +16,11 @@ public class SocketControl : MonoBehaviour
         );
     Socket connectionSocket; // todo use result as "opaque x" per Sam?
     byte[] buffer = new byte[10];
-    bool isJumpQueued = false;
+    string lastInstruction; // todo consdier callback
 
     const int PORT = 5555;
 
-    void Start()
+    public LocalSocket()
     {
         RegisterConnectionAcceptCallback();
     }
@@ -39,6 +41,17 @@ public class SocketControl : MonoBehaviour
         BeginReceive();
     }
 
+    public void SocketLog(string logText)
+    {
+        if (connectionSocket == null || !connectionSocket.Connected) { return; } // todo
+        connectionSocket.Send(Encoding.ASCII.GetBytes(logText));
+    }
+
+    public string GetLastInstruction() // TODO delegate?
+    {
+        return lastInstruction;
+    }
+
     private void BeginReceive()
     {
         connectionSocket.BeginReceive(
@@ -51,38 +64,11 @@ public class SocketControl : MonoBehaviour
         );
     }
 
-    void OnReceipt(System.IAsyncResult result)
+    private void OnReceipt(System.IAsyncResult result)
     {
+        isReadyToReceive = true; // TODO delegate?
         var bytesOut = connectionSocket.EndReceive(result); // to be tidy AND to get result length
-        var instruction = Encoding.ASCII.GetString(buffer, 0, bytesOut); // only print recent result length
-
-        if (instruction.Contains("jump"))
-        {
-            isJumpQueued = true;
-        }
-
+        lastInstruction = Encoding.ASCII.GetString(buffer, 0, bytesOut); // only print recent result length
         BeginReceive();
-    }
-
-    private void Update()
-    {
-        PrintSpeed();
-        if (isJumpQueued)
-        {
-            gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 10f, 0);
-            isJumpQueued = false;
-        }
-    }
-
-    void PrintSpeed()
-    {
-        if (connectionSocket == null || !connectionSocket.Connected) { return; } // todo
-        connectionSocket.Send(Encoding.ASCII.GetBytes(
-            "Speed at t = : " +
-            Time.time +
-            " = " +
-            GetComponent<Rigidbody>().velocity.z +
-            '\n'
-        ));
     }
 }
