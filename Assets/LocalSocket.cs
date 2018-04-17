@@ -37,7 +37,7 @@ public class LocalSocket
     {
         Debug.Log("Socket connected");
         connectionSocket = listeningSocket.EndAccept(result);
-        connectionSocket.Send(Encoding.ASCII.GetBytes("Connected to simulator"));
+        connectionSocket.Send(Encoding.ASCII.GetBytes("Connected to simulator\n"));
         BeginReceive();
     }
 

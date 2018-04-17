@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface ICarControl
 {
-    void SinglePedalPosition(float pos);
+    void SetPedalPos(float pos);
 }
