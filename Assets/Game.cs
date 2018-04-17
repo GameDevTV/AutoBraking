@@ -12,14 +12,14 @@ public class Game : MonoBehaviour {
     {
         Time.timeScale = timeScale;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public void StoppedWithDistanceRemaining(float distanceRemaining)
     {
         this.distanceRemaining = distanceRemaining;
+    }
+
+    public void Reset()
+    {
+        
     }
 }
