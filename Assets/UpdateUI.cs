@@ -2,25 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Vehicles.Car;
+
 
 public class UpdateUI : MonoBehaviour {
 
     [SerializeField] Text speedText, distText, scoreText;
-    [SerializeField] Car carToDisplay;
+    [SerializeField] CarController carController;
 
-    Game game;
+    void Update()
+    {
+        speedText.text = carController.CurrentSpeed.ToString();
+    }
 
-	// Use this for initialization
-	void Start ()
-    {
-        game = FindObjectOfType<Game>();    	
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-        speedText.text = carToDisplay.GetCurrentSpeed().ToString();
-        distText.text = carToDisplay.GetCurrentDist().ToString();
-        scoreText.text = game.GetScore().ToString();
-	}
 }

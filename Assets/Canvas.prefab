@@ -522,7 +522,7 @@ MonoBehaviour:
   m_MinValue: -1
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.56
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -669,7 +669,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 413, y: 230}
+  m_AnchoredPosition: {x: 366, y: 227}
   m_SizeDelta: {x: 368.9, y: 99.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224337096300670150
