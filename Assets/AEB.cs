@@ -68,7 +68,6 @@ public class AEB : MonoBehaviour
         if (myRigidBody.velocity.z < setSpeed)
         {
             carController.Move(0, 0, -1f, 1f); // apply handbrake
-            FindObjectOfType<Game>().StoppedWithDistanceRemaining(frontBumperRadar.GetDistance());
             Destroy(this);
         }
     }

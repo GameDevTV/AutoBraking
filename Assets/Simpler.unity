@@ -222,8 +222,13 @@ Prefab:
       objectReference: {fileID: 223448360}
     - target: {fileID: 224548598742553832, guid: 3e76e758827d44c0d8a8c60a2827b038,
         type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0.22000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 224548598742553832, guid: 3e76e758827d44c0d8a8c60a2827b038,
+        type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224548598742553832, guid: 3e76e758827d44c0d8a8c60a2827b038,
         type: 2}
@@ -232,18 +237,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 224756337620922086, guid: 3e76e758827d44c0d8a8c60a2827b038,
         type: 2}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
+      propertyPath: m_AnchorMin.y
+      value: 0.22000003
       objectReference: {fileID: 0}
     - target: {fileID: 224756337620922086, guid: 3e76e758827d44c0d8a8c60a2827b038,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224756337620922086, guid: 3e76e758827d44c0d8a8c60a2827b038,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0.22000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 114839455824283096, guid: 3e76e758827d44c0d8a8c60a2827b038,
+        type: 2}
+      propertyPath: m_Value
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3e76e758827d44c0d8a8c60a2827b038, type: 2}
@@ -481,6 +491,11 @@ Prefab:
     - target: {fileID: 114698208725244790, guid: 2632b5a1d0f7847898f456a8596fb18b,
         type: 2}
       propertyPath: startSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114698208725244790, guid: 2632b5a1d0f7847898f456a8596fb18b,
+        type: 2}
+      propertyPath: startDistance
       value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
