@@ -65,9 +65,11 @@ public class SocketControl : MonoBehaviour
 
     private void EchoSpeedIfAsked()
     {
+        var currentSpeed = GetComponent<CarControlWrapper>().GetSpeed();
+        print("Echoing speed as " + currentSpeed);
         if (localSocket.GetLastInstruction().Contains(getSpeed))
         {
-            localSocket.SocketLog(GetComponent<CarControlWrapper>().GetSpeed().ToString());
+            localSocket.SocketLog(currentSpeed.ToString());
         }
     }
 }
