@@ -13,7 +13,7 @@ public class UpdateUI : MonoBehaviour {
 
     void Update()
     {
-        speedText.text = carController.CurrentSpeed.ToString();
+        speedText.text = Mathf.RoundToInt(carController.CurrentSpeed).ToString();
         if (carController.AccelInput > 0)
         {
             pedalSlider.value = carController.AccelInput;

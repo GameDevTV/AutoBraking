@@ -1591,7 +1591,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 32
   m_CollisionDetection: 0
 --- !u!65 &6500000
 BoxCollider:
@@ -1924,7 +1924,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1936,7 +1936,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1948,7 +1948,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!108 &10800000
 Light:
   m_ObjectHideFlags: 1
@@ -2044,7 +2044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea65b38d485c374caa584a03f1de571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CarDriveType: 1
+  m_CarDriveType: 2
   m_WheelColliders:
   - {fileID: 14600006}
   - {fileID: 14600000}
@@ -2064,7 +2064,7 @@ MonoBehaviour:
   m_MaximumSteerAngle: 25
   m_SteerHelper: 0.644
   m_TractionControl: 1
-  m_FullTorqueOverAllWheels: 2500
+  m_FullTorqueOverAllWheels: 5000
   m_ReverseTorque: 0
   m_MaxHandbrakeTorque: 100000000
   m_Downforce: 100
@@ -6160,8 +6160,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41750d4204ba042b4b47cfcc9ee3eeab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpInstruction: jump
-  pedalInstruction: pedal
+  jump: jump
+  pedal: pedal
+  reset: reset
+  getSpeed: getSpeed
 --- !u!124 &124947788229063604
 Behaviour:
   m_ObjectHideFlags: 1

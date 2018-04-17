@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class SocketControl : MonoBehaviour
 {
-    [SerializeField] string jumpInstruction = "jump";
-    [SerializeField] string pedalInstruction = "pedal";
-    [SerializeField] string resetInstruction = "reset";
+    [Header("Instruction Strings")]
+    [SerializeField] string jump = "jump";
+    [SerializeField] string pedal = "pedal";
+    [SerializeField] string reset = "reset";
+    [SerializeField] string getSpeed = "getSpeed";
 
     LocalSocket localSocket;
-    string instructionCache;
+    string lastInstruction, instructionCache;
     bool isJumpQueued = false;
 
     private void Start()
@@ -21,8 +23,13 @@ public class SocketControl : MonoBehaviour
 
     private void Update()
     {
-        //LogSpeedToSocket();
         if (!localSocket.isReadyToReceive) { return; }
+
+        lastInstruction = localSocket.GetLastInstruction();
+        if (lastInstruction == instructionCache) { return; }
+        instructionCache = lastInstruction;
+
+        EchoSpeedIfAsked();
         JumpIfAsked();
         ProcessPedalCommands();
         ResetIfAsked();
@@ -31,7 +38,7 @@ public class SocketControl : MonoBehaviour
     // todo get reset working properly while keeping session
     private void ResetIfAsked()
     {
-        if (localSocket.GetLastInstruction().Contains(resetInstruction))
+        if (localSocket.GetLastInstruction().Contains(reset))
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
         }
@@ -39,31 +46,28 @@ public class SocketControl : MonoBehaviour
 
     private void ProcessPedalCommands()
     {
-        var lastInstruction = localSocket.GetLastInstruction();
-        if (lastInstruction.Contains(pedalInstruction) && lastInstruction != instructionCache)
+        if (lastInstruction.Contains(pedal))
         {
             instructionCache = lastInstruction;
-            string param = lastInstruction.Substring(pedalInstruction.Length);
+            string param = lastInstruction.Substring(pedal.Length);
             GetComponent<CarControlWrapper>().SetPedalPos(float.Parse(param));
         }
     }
 
     private void JumpIfAsked()
     {
-        if (localSocket.GetLastInstruction().Contains(jumpInstruction))
+        if (localSocket.GetLastInstruction().Contains(jump))
         {
             gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 10f, 0);
             isJumpQueued = false;
         }
     }
 
-    private void LogSpeedToSocket()
+    private void EchoSpeedIfAsked()
     {
-        localSocket.SocketLog(
-            "Speed at t = : " +
-            Time.time +
-            " = " +
-            GetComponent<Rigidbody>().velocity.z
-        );
+        if (localSocket.GetLastInstruction().Contains(getSpeed))
+        {
+            localSocket.SocketLog(GetComponent<CarControlWrapper>().GetSpeed().ToString());
+        }
     }
 }

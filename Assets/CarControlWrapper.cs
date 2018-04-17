@@ -30,4 +30,9 @@ public class CarControlWrapper : MonoBehaviour, ICarControl {
     {
         this.pedalPos = pedalPos;
     }
+
+    public float GetSpeed()
+    {
+        return carController.CurrentSpeed;
+    }
 }

@@ -172,18 +172,6 @@ Prefab:
       propertyPath: pedalSlider
       value: 
       objectReference: {fileID: 1031191421}
-    - target: {fileID: 11400002, guid: 0e7ee4df08df88c4880f43398f9ad2c2, type: 2}
-      propertyPath: m_CarDriveType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 0e7ee4df08df88c4880f43398f9ad2c2, type: 2}
-      propertyPath: m_FullTorqueOverAllWheels
-      value: 5000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5400000, guid: 0e7ee4df08df88c4880f43398f9ad2c2, type: 2}
-      propertyPath: m_Constraints
-      value: 32
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0e7ee4df08df88c4880f43398f9ad2c2, type: 2}
   m_IsPrefabParent: 0
@@ -279,7 +267,7 @@ Prefab:
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114839455824283096, guid: 3e76e758827d44c0d8a8c60a2827b038,
     type: 2}
-  m_PrefabInternal: {fileID: 1838349486}
+  m_PrefabInternal: {fileID: 1876523671}
   m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &1199724035
 Prefab:
@@ -346,7 +334,7 @@ TerrainCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1709382485}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 43ef4fce8301d4fe7938f433a572aab0, type: 2}
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: 2f2f54e1c220d4a1ea4f7d1b4451e834, type: 2}
   m_EnableTreeColliders: 1
@@ -394,7 +382,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1838349486
+--- !u!1001 &1876523671
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -491,109 +479,46 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1187674878105900, guid: 3e76e758827d44c0d8a8c60a2827b038, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224436932629350062, guid: 3e76e758827d44c0d8a8c60a2827b038,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 217
-      objectReference: {fileID: 0}
-    - target: {fileID: 224436932629350062, guid: 3e76e758827d44c0d8a8c60a2827b038,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: -347
-      objectReference: {fileID: 0}
-    - target: {fileID: 224337096300670150, guid: 3e76e758827d44c0d8a8c60a2827b038,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -51
-      objectReference: {fileID: 0}
-    - target: {fileID: 224337096300670150, guid: 3e76e758827d44c0d8a8c60a2827b038,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: -485
-      objectReference: {fileID: 0}
-    - target: {fileID: 224548598742553832, guid: 3e76e758827d44c0d8a8c60a2827b038,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224548598742553832, guid: 3e76e758827d44c0d8a8c60a2827b038,
-        type: 2}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224548598742553832, guid: 3e76e758827d44c0d8a8c60a2827b038,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224756337620922086, guid: 3e76e758827d44c0d8a8c60a2827b038,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224756337620922086, guid: 3e76e758827d44c0d8a8c60a2827b038,
-        type: 2}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224756337620922086, guid: 3e76e758827d44c0d8a8c60a2827b038,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1408833940531670, guid: 3e76e758827d44c0d8a8c60a2827b038, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 114523169350612356, guid: 3e76e758827d44c0d8a8c60a2827b038,
         type: 2}
       propertyPath: carController
       value: 
       objectReference: {fileID: 2080910290}
-    - target: {fileID: 114589666058751364, guid: 3e76e758827d44c0d8a8c60a2827b038,
-        type: 2}
-      propertyPath: m_FontData.m_Alignment
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114589666058751364, guid: 3e76e758827d44c0d8a8c60a2827b038,
-        type: 2}
-      propertyPath: m_FontData.m_FontSize
-      value: 46
-      objectReference: {fileID: 0}
     - target: {fileID: 114839455824283096, guid: 3e76e758827d44c0d8a8c60a2827b038,
         type: 2}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2080910291}
-    - target: {fileID: 114839455824283096, guid: 3e76e758827d44c0d8a8c60a2827b038,
+    - target: {fileID: 224548598742553832, guid: 3e76e758827d44c0d8a8c60a2827b038,
         type: 2}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetPedalPos
-      objectReference: {fileID: 0}
-    - target: {fileID: 114839455824283096, guid: 3e76e758827d44c0d8a8c60a2827b038,
-        type: 2}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114839455824283096, guid: 3e76e758827d44c0d8a8c60a2827b038,
+    - target: {fileID: 224548598742553832, guid: 3e76e758827d44c0d8a8c60a2827b038,
         type: 2}
-      propertyPath: m_MinValue
-      value: -1
+      propertyPath: m_AnchorMax.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114839455824283096, guid: 3e76e758827d44c0d8a8c60a2827b038,
+    - target: {fileID: 224548598742553832, guid: 3e76e758827d44c0d8a8c60a2827b038,
         type: 2}
-      propertyPath: m_MaxValue
-      value: 1
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114523169350612356, guid: 3e76e758827d44c0d8a8c60a2827b038,
+    - target: {fileID: 224756337620922086, guid: 3e76e758827d44c0d8a8c60a2827b038,
         type: 2}
-      propertyPath: pedalSlider
-      value: 
-      objectReference: {fileID: 1031191421}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224756337620922086, guid: 3e76e758827d44c0d8a8c60a2827b038,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224756337620922086, guid: 3e76e758827d44c0d8a8c60a2827b038,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3e76e758827d44c0d8a8c60a2827b038, type: 2}
   m_IsPrefabParent: 0

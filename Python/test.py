@@ -1,43 +1,35 @@
 import socket
 import argparse
 
-class SocketConnector:
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    
-    def __init__(self):
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+def connect():
+    print("Connect")
 
-    def connect(self):
-        print("Connect")
-        
-        HOST = '127.0.0.1'
-        PORT = 5555
-        self.s.connect((HOST, PORT))
+    HOST = '127.0.0.1'
+    PORT = 5555
+    s.connect((HOST, PORT))
 
-    def print_status(self):
-        data = self.s.recv(1024)
-        print (repr(data))
+def print_status():
+    data = s.recv(1024)
+    print (repr(data))
 
-    def jump(self):
-        command = "jump" #param
-        b = bytearray()
-        b.extend(map(ord, command))
-        self.s.sendall(b)
+def jump():
+    command = "jump" #param
+    b = bytearray()
+    b.extend(map(ord, command))
+    s.sendall(b)
+
+def get_speed():
+    command = "getSpeed"
+    b = bytearray()
+    b.extend(map(ord, command))
+    s.sendall(b)
+    data = s.recv(1024)
+    print (data)
 
 def main():
-    parser = argparse.ArgumentParser(description='Interacts with the running simulator')
-    parser.add_argument('command', type=str, nargs="*", help='The command to send immediately connected')
-    args = parser.parse_args()
-
-    sc = SocketConnector()
-    sc.connect()
-
-    while True:
-        # sc.print_status()
-        sc.jump()
-
-    s.close()
+    connect()
 
 if __name__ == '__main__':
     main()
