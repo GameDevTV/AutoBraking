@@ -1,0 +1,7 @@
+// Using Java syntax highlighting
+syntax = "proto3";
+
+message CarStats
+{
+	int speed = 1; // remember to use 1-15 for most common
+}
