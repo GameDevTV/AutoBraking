@@ -27,7 +27,7 @@ public class LocalSocket
 
     private void RegisterConnectionAcceptCallback()
     {
-        listeningSocket.Bind(new IPEndPoint(IPAddress.Loopback,PORT));
+        listeningSocket.Bind(new IPEndPoint(IPAddress.Loopback,PORT)); // todo ensure can only be one, singleton?
         listeningSocket.Listen(1);
         Debug.Log("Waiting for localHost connection on port " + PORT + "...");
         listeningSocket.BeginAccept(new System.AsyncCallback(OnAcceptConnection), null);
@@ -41,10 +41,16 @@ public class LocalSocket
         BeginReceive();
     }
 
-    public void SocketLog(string logText)
+    public void SendLog(string logText)
     {
         if (connectionSocket == null || !connectionSocket.Connected) { return; } // todo
         connectionSocket.Send(Encoding.ASCII.GetBytes(logText));
+    }
+
+    public void Send(byte[] byteArray)
+    {
+        if (connectionSocket == null || !connectionSocket.Connected) { return; } // todo
+        connectionSocket.Send(byteArray); 
     }
 
     public string GetLastInstruction() // TODO delegate?

@@ -22,7 +22,6 @@ public class Car : MonoBehaviour
     void FixedUpdate()
     {
         UpdateSpeed();
-
         currentDistance -= currentSpeed * Time.deltaTime;
     }
 

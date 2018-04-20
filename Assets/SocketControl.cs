@@ -69,7 +69,7 @@ public class SocketControl : MonoBehaviour
         print("Echoing speed as " + currentSpeed);
         if (localSocket.GetLastInstruction().Contains(getSpeed))
         {
-            localSocket.SocketLog(currentSpeed.ToString());
+            localSocket.SendLog(currentSpeed.ToString());
         }
     }
 }
