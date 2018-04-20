@@ -14,14 +14,12 @@ public class SocketControl : MonoBehaviour
     {
         Application.runInBackground = true;
         localSocket = new LocalSocket();
-
-        SendCarStats();
     }
 
     public void SendCarStats()
     {
         CarStats carStats = new CarStats();
-        carStats.Speed = 42;
+        carStats.Speed = UnityEngine.Random.Range(0,10);
 
         byte[] messageWithHeader = CreateMessageWithHeader(carStats);
         Debug.Log("Sending bytes with header: " + BitConverter.ToString(messageWithHeader));
@@ -32,6 +30,7 @@ public class SocketControl : MonoBehaviour
     {
         var rawMessageBytes = carStats.ToByteArray();
         int rawMessageSize = rawMessageBytes.Length;
+        print("raw message size = " + rawMessageSize);
         var messageWithHeader = new byte[rawMessageSize + 1];
         messageWithHeader[0] = BitConverter.GetBytes(rawMessageSize)[0];
         Buffer.BlockCopy(rawMessageBytes, 0, messageWithHeader, 1, rawMessageSize);
@@ -41,7 +40,5 @@ public class SocketControl : MonoBehaviour
     private void Update()
     {
         if (!localSocket.isReadyToReceive) { return; }
-
-        print("Ready to receive");
     }
 }

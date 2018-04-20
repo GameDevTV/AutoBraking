@@ -7,6 +7,7 @@ using System.Text;
 
 public class LocalSocket
 {
+    // todo allow disconnect and reconnect
     public bool isReadyToReceive = false;
 
     Socket listeningSocket = new Socket(
@@ -37,7 +38,6 @@ public class LocalSocket
     {
         Debug.Log("Socket connected");
         connectionSocket = listeningSocket.EndAccept(result);
-        connectionSocket.Send(Encoding.ASCII.GetBytes("Connected to simulator\n"));
         BeginReceive();
     }
 
@@ -71,4 +71,6 @@ public class LocalSocket
         lastInstruction = Encoding.ASCII.GetString(buffer, 0, bytesOut); // only print recent result length
         BeginReceive();
     }
+
+    // todo close socket on application quit
 }
