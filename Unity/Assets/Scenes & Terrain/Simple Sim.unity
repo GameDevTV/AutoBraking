@@ -805,6 +805,11 @@ Prefab:
       propertyPath: m_AnchoredPosition.y
       value: 179.24707
       objectReference: {fileID: 0}
+    - target: {fileID: 114284073679342314, guid: 3e76e758827d44c0d8a8c60a2827b038,
+        type: 2}
+      propertyPath: m_ScreenMatchMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3e76e758827d44c0d8a8c60a2827b038, type: 2}
   m_IsPrefabParent: 0

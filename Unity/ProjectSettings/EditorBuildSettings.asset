@@ -6,8 +6,5 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Simpler.unity
-    guid: c5f8a13b17e954ad6895ab34923e3764
-  - enabled: 1
-    path: Assets/Simple Wim.unity
+    path: Assets/Scenes & Terrain/Simple Sim.unity
     guid: 662d9555410974878bc3227dc8bf153c
