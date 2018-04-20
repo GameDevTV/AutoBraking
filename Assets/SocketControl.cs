@@ -1,75 +1,47 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Google.Protobuf;
 using UnityEngine;
 
 public class SocketControl : MonoBehaviour
 {
-    [Header("Instruction Strings")]
-    [SerializeField] string jump = "jump";
-    [SerializeField] string pedal = "pedal";
-    [SerializeField] string reset = "reset";
-    [SerializeField] string getSpeed = "getSpeed";
-
     LocalSocket localSocket;
     string lastInstruction, instructionCache;
     bool isJumpQueued = false;
 
-    private void Start()
+     void Start()
     {
         Application.runInBackground = true;
         localSocket = new LocalSocket();
+
+        SendCarStats();
+    }
+
+    public void SendCarStats()
+    {
+        CarStats carStats = new CarStats();
+        carStats.Speed = 42;
+
+        byte[] messageWithHeader = CreateMessageWithHeader(carStats);
+        Debug.Log("Sending bytes with header: " + BitConverter.ToString(messageWithHeader));
+        localSocket.Send(messageWithHeader);
+    }
+
+    private static byte[] CreateMessageWithHeader(CarStats carStats) // todo make more general
+    {
+        var rawMessageBytes = carStats.ToByteArray();
+        int rawMessageSize = rawMessageBytes.Length;
+        var messageWithHeader = new byte[rawMessageSize + 1];
+        messageWithHeader[0] = BitConverter.GetBytes(rawMessageSize)[0];
+        Buffer.BlockCopy(rawMessageBytes, 0, messageWithHeader, 1, rawMessageSize);
+        return messageWithHeader;
     }
 
     private void Update()
     {
         if (!localSocket.isReadyToReceive) { return; }
 
-        lastInstruction = localSocket.GetLastInstruction();
-        if (lastInstruction == instructionCache) { return; }
-        instructionCache = lastInstruction;
-
-        EchoSpeedIfAsked();
-        JumpIfAsked();
-        ProcessPedalCommands();
-        ResetIfAsked();
-    }
-
-    // todo get reset working properly while keeping session
-    private void ResetIfAsked()
-    {
-        if (localSocket.GetLastInstruction().Contains(reset))
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-        }
-    }
-
-    private void ProcessPedalCommands()
-    {
-        if (lastInstruction.Contains(pedal))
-        {
-            instructionCache = lastInstruction;
-            string param = lastInstruction.Substring(pedal.Length);
-            GetComponent<CarControlWrapper>().SetPedalPos(float.Parse(param));
-        }
-    }
-
-    private void JumpIfAsked()
-    {
-        if (localSocket.GetLastInstruction().Contains(jump))
-        {
-            gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, 10f, 0);
-            isJumpQueued = false;
-        }
-    }
-
-    private void EchoSpeedIfAsked()
-    {
-        var currentSpeed = GetComponent<CarControlWrapper>().GetSpeed();
-        print("Echoing speed as " + currentSpeed);
-        if (localSocket.GetLastInstruction().Contains(getSpeed))
-        {
-            localSocket.SendLog(currentSpeed.ToString());
-        }
+        print("Ready to receive");
     }
 }

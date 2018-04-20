@@ -16,7 +16,7 @@ public class LocalSocket
         );
     Socket connectionSocket; // todo use result as "opaque x" per Sam?
     byte[] buffer = new byte[10];
-    string lastInstruction; // todo consdier callback
+    string lastInstruction; // todo consdier callback or reactor
 
     const int PORT = 5555;
 
@@ -39,12 +39,6 @@ public class LocalSocket
         connectionSocket = listeningSocket.EndAccept(result);
         connectionSocket.Send(Encoding.ASCII.GetBytes("Connected to simulator\n"));
         BeginReceive();
-    }
-
-    public void SendLog(string logText)
-    {
-        if (connectionSocket == null || !connectionSocket.Connected) { return; } // todo
-        connectionSocket.Send(Encoding.ASCII.GetBytes(logText));
     }
 
     public void Send(byte[] byteArray)
